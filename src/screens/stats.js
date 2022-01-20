@@ -1,14 +1,13 @@
 import React from "react"
-import { View, StyleSheet } from 'react-native'
-import Video from "react-native-video"
-import demoVideo from '../assets/output2.mp4'
+import { View, StyleSheet, Text } from 'react-native'
+//import Video from "react-native-video"
 
 
 const StatsScreen = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Video source={demoVideo} paused={true} repeat={false} controls={true} style={styles.mediaPlayer} />  
+            <Text>Stats</Text>      
         </View>
     )
 }
