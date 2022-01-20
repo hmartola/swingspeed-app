@@ -1,32 +1,39 @@
-import React, { useEffect } from "react"
-import { Button, Text, View } from 'react-native'
+import React, { useContext } from "react"
+import { Button, Image, Text, View } from 'react-native'
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { setLoggedOut } from "../components/loginContext"
+import userService from '../service/users'
+import { LoginContext } from "../contexts/loginContext"
 
 const ProfileScreen = ({ navigation }) => {
 
+    const { isLoggedIn, setIsLoggedIn } = useContext(LoginContext)
+
     const signOut = async () => {
         try {
-            await AsyncStorage.removeItem('user')
-            //TODO call /token/logout
-            await AsyncStorage.removeItem('token')
-            setLoggedOut()
-            navigation.navigate('Login')
-            navigation.reset({
-                index: 0,
-                routes: [{ name: 'Login' }]
-            })
+            await userService.logoutUser()
         }
-        catch(e) {
-            console.log(e)
+        catch(error) {
+            console.log(error)
         }
+
+        await AsyncStorage.removeItem('user')
+        await AsyncStorage.removeItem('token')
+        setIsLoggedIn(false)
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Profile</Text>
-            <Button title='Sign out of account' onPress={() => signOut()}></Button>
+        <View style={{ flex: 1, justifyContent: 'flex-start', marginTop: 30 }}>
+            <Ionicons name='md-settings-outline' 
+                      size={35} 
+                      onPress={() => navigation.navigate('Settings')}
+                      style={{ alignSelf: 'flex-end', marginRight: 15 }}/>
+            <Image source={require('../assets/Robert.jpg')} style={{ width: 100, height: 100, borderRadius: 100 }} />
+            
+            <View style={{ alignItems: 'center', padding: 15 }}>
+                <Button title='Sign out of account' onPress={() => signOut()}></Button>
+            </View>
         </View>
     )
 }
