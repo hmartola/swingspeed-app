@@ -1,6 +1,6 @@
 import { Alert } from "react-native"
 
-const newMessage = (message) => {
+export const errorMessage = (message) => {
     Alert.alert(
         'Error',
         message,
@@ -12,4 +12,14 @@ const newMessage = (message) => {
     )
 }
 
-export default newMessage
+export const successMessage = (message) => {
+    Alert.alert(
+        'Success',
+        message,
+        [
+            {
+                text: 'OK'
+            }
+        ]
+    )
+}
