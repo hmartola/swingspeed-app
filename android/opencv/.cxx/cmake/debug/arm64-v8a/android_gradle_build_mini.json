@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/libcxx_helper/CMakeLists.txt",
+    "/home/diza/Android/Sdk/ndk/20.1.5948944/build/cmake/android.toolchain.cmake",
+    "/home/diza/Android/Sdk/ndk/20.1.5948944/build/cmake/platforms.cmake"
+  ],
+  "cleanCommands": [
+    "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja -C \"/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/cmake/debug/arm64-v8a\" clean"
+  ],
+  "buildTargetsCommand": "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja  -C \"/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/cmake/debug/arm64-v8a\" {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "opencv_jni_shared-Debug-arm64-v8a": {
+      "artifactName": "opencv_jni_shared",
+      "buildCommand": "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja -C \"/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/cmake/debug/arm64-v8a\" opencv_jni_shared",
+      "abi": "arm64-v8a",
+      "output": "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/cmake/debug/arm64-v8a/libopencv_jni_shared.a",
+      "runtimeFiles": []
+    }
+  }
+}

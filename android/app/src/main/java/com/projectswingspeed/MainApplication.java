@@ -2,12 +2,19 @@ package com.projectswingspeed;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
+
+import com.reactlibrary.RNOpenCvLibraryPackage;
+
+import org.opencv.android.OpenCVLoader;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -24,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
+          packages.add(new RNOpenCvLibraryPackage());
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
           return packages;
@@ -45,6 +53,9 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+    if (!OpenCVLoader.initDebug()) {
+      Log.d("OpenCv", "Error while init");
+    }
   }
 
   /**

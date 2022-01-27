@@ -1,0 +1,39 @@
+{
+  "stringTable": {},
+  "buildFiles": [
+    "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/libcxx_helper/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja",
+      "-C",
+      "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/RelWithDebInfo/1e295n46/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja",
+    "-C",
+    "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/RelWithDebInfo/1e295n46/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {
+    "opencv_jni_shared-RelWithDebInfo-x86_64": {
+      "buildCommandComponents": [
+        "/home/diza/Android/Sdk/cmake/3.10.2.4988404/bin/ninja",
+        "-C",
+        "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/RelWithDebInfo/1e295n46/x86_64",
+        "opencv_jni_shared"
+      ],
+      "buildType": "release",
+      "abi": "x86_64",
+      "artifactName": "opencv_jni_shared",
+      "output": "/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/RelWithDebInfo/1e295n46/x86_64/libopencv_jni_shared.a"
+    }
+  },
+  "toolchains": {},
+  "cFileExtensions": [],
+  "cppFileExtensions": [
+    "cpp"
+  ]
+}

@@ -1,13 +1,14 @@
 import React from "react"
-import { View, StyleSheet, Text } from 'react-native'
-//import Video from "react-native-video"
+import { View, StyleSheet, Text, } from 'react-native'
 
 
 const StatsScreen = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            <Text>Stats</Text>      
+            <Text>
+                test
+            </Text>  
         </View>
     )
 }

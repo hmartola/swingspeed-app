@@ -1,0 +1,2 @@
+ninja: Entering directory `/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/Debug/4d613j46/x86'
+ninja: no work to do.

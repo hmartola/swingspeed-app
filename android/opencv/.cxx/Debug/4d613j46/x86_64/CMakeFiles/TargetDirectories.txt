@@ -1,0 +1,3 @@
+/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/Debug/4d613j46/x86_64/CMakeFiles/rebuild_cache.dir
+/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/Debug/4d613j46/x86_64/CMakeFiles/edit_cache.dir
+/home/diza/Studier/projectcourse/swingspeed-app/android/opencv/.cxx/Debug/4d613j46/x86_64/CMakeFiles/opencv_jni_shared.dir

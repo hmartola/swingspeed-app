@@ -1,9 +1,11 @@
 import React, { useState } from "react"
-import { View, TouchableOpacity, Button } from 'react-native'
+import { View, TouchableOpacity, Button, NativeModules } from 'react-native'
 import { RNCamera } from 'react-native-camera'
 import { useCamera } from 'react-native-camera-hooks'
 
 const CameraScreen = () => {
+
+  const { OpenCV } = NativeModules;
 
     const [
         { cameraRef, isRecording },
