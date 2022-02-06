@@ -60,3 +60,4 @@ buck-out/
 /ios/Pods/
 
 src/assets/
+requests.rest
