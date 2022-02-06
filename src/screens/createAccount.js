@@ -42,9 +42,9 @@ const CreateAccountScreen = () => {
     }
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', display: 'flex' }}>
+        <View style={{ flex: 1, justifyContent: 'center', display: 'flex', marginLeft: width*.025, marginRight: width*.025, marginTop: height*.01 }}>
             <Text style={{ padding: 15, fontSize: 20, color: 'darkgreen', alignSelf: 'center', borderWidth: 2, marginBottom: 50 }}>Sign up</Text>
-            <Text style={{ alignSelf: 'center', marginBottom: 50, width: 300 }}>A personal account is required if you wish to save your data and statistics. No sensitive data will be processed by the Veloforce app.</Text>
+            <Text style={{ alignSelf: 'center', marginBottom: 50, width: 250, color: '#2c2c2c' }}>A personal account is required if you wish to save your data and statistics. No sensitive data will be processed by the Veloforce app.</Text>
             <View style={{ alignItems: 'center', marginLeft: width*.05, marginRight: width*.05 }}>
                 <Text style={{ paddingLeft: 10, fontSize: 16, fontWeight: 'bold', color: 'darkgreen', alignSelf: 'flex-start' }}>Username</Text>
                 <Input onChangeText={username => setUsername(username)} defaultValue={username} />
