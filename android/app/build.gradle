@@ -128,12 +128,12 @@ def nativeArchitectures = project.getProperties().get("reactNativeDebugArchitect
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdkVersion 31 //rootProject.ext.compileSdkVersion
 
     defaultConfig {
         applicationId "com.projectswingspeed"
         minSdkVersion rootProject.ext.minSdkVersion
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion 31 //rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general'
