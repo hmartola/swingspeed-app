@@ -4,10 +4,9 @@ import { View,
          useWindowDimensions, 
          Linking, 
          StyleSheet, 
-         ActivityIndicator, 
-         TouchableOpacity } from 'react-native'
+         ActivityIndicator } from 'react-native'
 import { useIsFocused } from "@react-navigation/native"
-import { Button } from "react-native-elements"
+import { Button, Overlay } from "react-native-elements"
 import { Camera, useCameraDevices } from "react-native-vision-camera"
 import RNFS from 'react-native-fs'
 
@@ -16,6 +15,8 @@ const CameraScreen = () => {
 
   const [isPermitted, setIsPermitted] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const [notification, setNotification] = useState('')
 
   const { height, width } = useWindowDimensions()
   const isFocused = useIsFocused()
@@ -63,10 +64,20 @@ const CameraScreen = () => {
         onRecordingError: (error) => console.error(error),
       })
       setIsRecording(true)
+      setVisible(true)
+      setNotification('Recording in progress...')
+      setTimeout(() => {
+        setVisible(false)
+      }, 3000)
     }
     else {
       await camera.current.stopRecording()
       setIsRecording(false)
+      setVisible(true)
+      setNotification('Recording stopped')
+      setTimeout(() => {
+        setVisible(false)
+      }, 3000);
     }
   }
 
@@ -74,10 +85,52 @@ const CameraScreen = () => {
     console.log(recording, recording.path)
     const fileName = recording.path.substring(recording.path.lastIndexOf('/') + 7)
     console.log(fileName)
-    const newFilePath = RNFS.ExternalDirectoryPath + '/' + fileName
+    const newFilePath = RNFS.DownloadDirectoryPath + '/' + fileName
     console.log(newFilePath)
     RNFS.moveFile(recording.path, newFilePath)
   }
+
+  const handleError = () => {
+    setVisible(true)
+    setNotification('Something went wrong...')
+    setTimeout(() => {
+      setVisible(false)
+    }, 5000);
+  }
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+      justifyContent: 'center', 
+      marginLeft: width*.05, 
+      marginRight: width*.05, 
+      marginTop: height*.01
+    },
+    recordButtonPassive: {
+      borderWidth: 5,
+      borderColor: 'white',
+      backgroundColor: 'transparent',
+      borderRadius: 100,
+      height: height*.125,
+    },
+    recordButtonActive: {
+      borderWidth: 5,
+      borderColor: 'red',
+      backgroundColor: 'transparent',
+      borderRadius: 100,
+      height: height*.125,
+    },
+    recordButtonContainer: {
+      width: width*.26,
+      marginTop: height*.725 
+    },
+    overlay: {
+      backgroundColor: '#434343',
+      alignSelf: 'center',
+      bottom: '47.5%',
+      width: '90%'
+    }
+  })
 
   if (device == null) {
     return (
@@ -90,21 +143,28 @@ const CameraScreen = () => {
   return (
     <View style={{ flex: 1 }}>
       {isPermitted && device !== null ? (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Overlay isVisible={visible} overlayStyle={styles.overlay}>
+            <Text style={{ textAlign: 'center' }}>{notification}</Text>
+          </Overlay>
           <Camera
             style={StyleSheet.absoluteFill} 
             device={device}
             ref={camera}
             isActive={isFocused}
             video={true}
+            enableZoomGesture={true}
+            onError={() => handleError()}
           />
           {!isRecording ? (
-            <TouchableOpacity 
-              style={styles.recordButtonPassive}
+            <Button 
+              buttonStyle={styles.recordButtonPassive}
+              containerStyle={styles.recordButtonContainer}
               onPress={() => handlePress()} /> 
           ) : (
-            <TouchableOpacity 
-              style={styles.recordButtonActive}
+            <Button 
+              buttonStyle={styles.recordButtonActive}
+              containerStyle={styles.recordButtonContainer}
               onPress={() => handlePress()} /> 
           )}
         </View>
@@ -126,41 +186,5 @@ const CameraScreen = () => {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    justifyContent: 'center', 
-    marginLeft: width*.05, 
-    marginRight: width*.05, 
-    marginTop: height*.01
-  },
-  recordButtonPassive: {
-    borderWidth: 5,
-    borderColor: 'white',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: height*.045,
-    left: width*.39,
-    width: width*.26,
-    height: height*.1,
-    backgroundColor: 'transparent',
-    borderRadius: 100,
-  },
-  recordButtonActive: {
-    borderWidth: 5,
-    borderColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'absolute',
-    bottom: height*.045,
-    left: width*.4,
-    width: '21%',
-    height: '11%',
-    backgroundColor: 'transparent',
-    borderRadius: 100,
-  }
-})
 
 export default CameraScreen
