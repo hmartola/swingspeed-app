@@ -10,6 +10,8 @@ import { Button, Overlay } from "react-native-elements"
 import { Camera, useCameraDevices } from "react-native-vision-camera"
 import RNFS from 'react-native-fs'
 
+import videoService from '../service/video'
+
 
 const CameraScreen = () => {
 
@@ -81,13 +83,23 @@ const CameraScreen = () => {
     }
   }
 
-  const handleRecording = (recording) => {
-    console.log(recording, recording.path)
-    const fileName = recording.path.substring(recording.path.lastIndexOf('/') + 7)
-    console.log(fileName)
-    const newFilePath = RNFS.DownloadDirectoryPath + '/' + fileName
-    console.log(newFilePath)
-    RNFS.moveFile(recording.path, newFilePath)
+  const handleRecording = async (recording) => {
+    try {
+      // Upload
+      console.log(recording, recording.path)
+      const fileName = recording.path.substring(recording.path.lastIndexOf('/') + 7)
+      console.log(fileName)
+      const video = await videoService.uploadVideo(recording.path, fileName)
+      console.log(video)
+      
+      // Move to accessible location
+      const newFilePath = RNFS.DownloadDirectoryPath + '/' + fileName
+      console.log(newFilePath)
+      await RNFS.moveFile(recording.path, newFilePath)
+    } 
+    catch(error) {
+      console.log(error)
+    }
   }
 
   const handleError = () => {
