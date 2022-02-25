@@ -23,40 +23,40 @@ import { LoginContext } from './contexts/loginContext';
 
 const App = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState(null)
+	const [isLoggedIn, setIsLoggedIn] = useState(null)
 
-    useEffect(() => {
-        (async () =>  {
-            const value = await AsyncStorage.getItem('user')
-            if (value !== null) {
-                setIsLoggedIn(true)
-            } else {
-                setIsLoggedIn(false)
-            } 
-        })()
-    }, [])
-    
-    const Stack = createNativeStackNavigator()
+	useEffect(() => {
+		(async () => {
+			const value = await AsyncStorage.getItem('user')
+			if (value !== null) {
+				setIsLoggedIn(true)
+			} else {
+				setIsLoggedIn(false)
+			}
+		})()
+	}, [])
 
-    return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                <LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-                    {isLoggedIn ? (
-                        <Stack.Navigator screenOptions={{ headerShown: false }}>
-                            <Stack.Screen name='Main Menu' component={MainMenu} />
-                            <Stack.Screen name='Settings' component={SettingsScreen} />
-                        </Stack.Navigator>
-                    ) : (
-                        <Stack.Navigator screenOptions={{ headerShown: false }}>
-                            <Stack.Screen name='Login' component={LoginScreen} />
-                            <Stack.Screen name='CreateAccount' component={CreateAccountScreen} />
-                        </Stack.Navigator>
-                    )}
-                </LoginContext.Provider>
-            </NavigationContainer>
-        </SafeAreaProvider>
-    )
+	const Stack = createNativeStackNavigator()
+
+	return (
+		<SafeAreaProvider>
+			<NavigationContainer>
+				<LoginContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+					{isLoggedIn ? (
+						<Stack.Navigator screenOptions={{ headerShown: false }}>
+							<Stack.Screen name='Main Menu' component={MainMenu} />
+							<Stack.Screen name='Settings' component={SettingsScreen} />
+						</Stack.Navigator>
+					) : (
+						<Stack.Navigator screenOptions={{ headerShown: false }}>
+							<Stack.Screen name='Login' component={LoginScreen} />
+							<Stack.Screen name='CreateAccount' component={CreateAccountScreen} />
+						</Stack.Navigator>
+					)}
+				</LoginContext.Provider>
+			</NavigationContainer>
+		</SafeAreaProvider>
+	)
 }
 
 
