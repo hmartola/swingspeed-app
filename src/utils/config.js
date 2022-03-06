@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://velofore.herokuapp.com/api'
+export const BASE_URL = 'https://velofore.herokuapp.com'
