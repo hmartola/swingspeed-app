@@ -6,6 +6,7 @@ import { useIsFocused } from "@react-navigation/native"
 import { Button, Overlay } from "react-native-elements"
 import { Camera, useCameraDevices } from "react-native-vision-camera"
 import RNFS from 'react-native-fs'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import videoService from '../service/video'
 
@@ -15,13 +16,20 @@ const CameraScreen = () => {
 	const [isPermitted, setIsPermitted] = useState(false)
 	const [isRecording, setIsRecording] = useState(false)
 	const [visible, setVisible] = useState(false)
+	const [backCamera, setBackCamera] = useState(true)
 	const [notification, setNotification] = useState('')
 
 	const { height, width } = useWindowDimensions()
 	const isFocused = useIsFocused()
 
 	const devices = useCameraDevices()
-	const device = devices.back
+	
+	let device = null
+	if (backCamera)
+		device = devices.back
+	else 
+		device = devices.front
+
 	const camera = useRef(null)
 	//console.log(devices)
 
@@ -73,7 +81,7 @@ const CameraScreen = () => {
 			await camera.current.stopRecording()
 			setIsRecording(false)
 			setVisible(true)
-			setNotification('Recording stopped')
+			setNotification('Recording stopped, uploading now...')
 			setTimeout(() => {
 				setVisible(false)
 			}, 3000);
@@ -88,14 +96,14 @@ const CameraScreen = () => {
 			console.log(fileName)
 			const video = await videoService.uploadVideo(recording.path, fileName)
 			console.log(video)
-
+			
 			// Move to accessible location
 			const newFilePath = RNFS.DownloadDirectoryPath + '/' + fileName
 			console.log(newFilePath)
 			await RNFS.moveFile(recording.path, newFilePath)
 		}
 		catch (error) {
-			console.log(error)
+			console.warn(error)
 		}
 	}
 
@@ -131,7 +139,7 @@ const CameraScreen = () => {
 		},
 		recordButtonContainer: {
 			width: width * .26,
-			marginTop: height * .725
+			marginTop: height * .675
 		},
 		overlay: {
 			backgroundColor: '#434343',
@@ -165,6 +173,13 @@ const CameraScreen = () => {
 						enableZoomGesture={true}
 						onError={() => handleError()}
 					/>
+					<Ionicons 
+						name='camera-reverse-outline'
+						size={45}
+						onPress={() => setBackCamera(!backCamera)}
+						style={{ alignSelf: 'flex-end', marginTop: 20, marginRight: 10 }}
+					/>
+
 					{!isRecording ? (
 						<Button
 							buttonStyle={styles.recordButtonPassive}
