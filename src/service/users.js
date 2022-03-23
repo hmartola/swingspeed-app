@@ -2,10 +2,9 @@ import axios from "axios"
 
 import { BASE_URL } from "../utils/config"
 import { getAuthToken } from "../components/user"
-import profpic from '../assets/Robert.jpg'
 
-const userUrl = `${BASE_URL}/users`
-const tokenUrl = `${BASE_URL}/token`
+const userUrl = `${BASE_URL}/api/users`
+const tokenUrl = `${BASE_URL}/api/token`
 
 const authorization = async () => {
 	let token = await getAuthToken()
@@ -44,7 +43,20 @@ const logoutUser = async () => {
 	}
 }
 
-const uploadProfilePicture = async () => {
+const getUserData = async () => {
+	const token = await authorization()
+	const config = {
+		headers: { Authorization: token }
+	}
+	try {
+		const response = await axios.get(`${userUrl}/me/`, config)
+		return response.data
+	} catch (err) {
+		throw err
+	}
+}
+
+const uploadProfilePicture = async (picture) => {
 	const token = await authorization()
 	const config = {
 		headers: {
@@ -53,12 +65,30 @@ const uploadProfilePicture = async () => {
 		}
 	}
 	try {
+		const dataObj = {
+			uri: picture.uri,
+			name: picture.fileName,
+			type: picture.type
+		}
 		const data = new FormData()
-		data.append('profile_picture', profpic, 'Robert.jpg')
-		console.log(`${userUrl}/profile-picture`)
+		data.append('profile_picture', dataObj)
 		const response = await axios.put(`${userUrl}/profile-picture/`, data, config)
-		console.log('65')
-		console.log(response)
+		return response 
+	} catch (err) {
+		return err.response.data
+	}
+}
+
+const getProfilePicture = async () => {
+	const token = await authorization()
+	const config = {
+		headers: {
+			Authorization: token,
+			ContentType: 'multipart/form-data'
+		}
+	}
+	try {
+		const response = await axios.get(`${userUrl}/profile-picture/`, config)
 		return response
 	} catch (err) {
 		return err.response.data
@@ -66,4 +96,4 @@ const uploadProfilePicture = async () => {
 }
 
 
-export default { getToken, createUser, logoutUser, uploadProfilePicture }
+export default { getToken, createUser, logoutUser, getUserData, uploadProfilePicture, getProfilePicture }
