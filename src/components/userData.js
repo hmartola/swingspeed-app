@@ -158,7 +158,7 @@ const UserData = ({ username }) => {
 				<ListItem.Content>
 					<ListItem.Title>Top swing speed</ListItem.Title>
 				</ListItem.Content>
-				<ListItem.Title>{topSpeed} kph</ListItem.Title>
+				<ListItem.Title>{topSpeed} m/s</ListItem.Title>
 			</ListItem>
 		</View>
 

@@ -40,7 +40,7 @@ export const progressNotification = async (event, progress) => {
     await notifee.displayNotification({
       id: '1',
       title: 'Finished',
-      body: `${progress.message} kph`,
+      body: `${progress.message} m/s`,
       android: {
         channelId
       }

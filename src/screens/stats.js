@@ -47,7 +47,7 @@ const StatsScreen = () => {
 						<Card key={swing.id}>
 							<Card.Title>{trimDate(swing.date_created)}</Card.Title>
 							<Card.Divider />
-							<Text style={{ textAlign: 'center', color: '#434343', fontSize: 15 }}>{swing.speed} kph</Text>
+							<Text style={{ textAlign: 'center', color: '#434343', fontSize: 15 }}>{swing.speed} m/s</Text>
 						</Card>
 					)}
 				</View>		

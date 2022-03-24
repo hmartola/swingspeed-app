@@ -82,9 +82,9 @@ const MainScreen = ({ navigation }) => {
 				<Card.Title style={{ fontSize: 20 }}>Your latest swing speed</Card.Title>
 				<Card.Divider />
 				{swingData.length !== 0 ? (
-					<Text style={{ textAlign: 'center', color: '#434343' }}>{getLatestSwing()} kph</Text>
+					<Text style={{ textAlign: 'center', color: '#434343' }}>{getLatestSwing()} m/s</Text>
 				) : (
-					<Text style={{ textAlign: 'center', color: '#434343' }}>0 kph</Text>
+					<Text style={{ textAlign: 'center', color: '#434343' }}>0 m/s</Text>
 				)}
 			</Card>
 		</View>
@@ -94,9 +94,9 @@ const MainScreen = ({ navigation }) => {
 				<Card.Title style={{ fontSize: 20 }}>Your top swing speed</Card.Title>
 				<Card.Divider />
 				{swingData.length !== 0 ? (
-					<Text style={{ textAlign: 'center', color: '#434343' }}>{getTopSwing()} kph</Text>
+					<Text style={{ textAlign: 'center', color: '#434343' }}>{getTopSwing()} m/s</Text>
 				) : (
-					<Text style={{ textAlign: 'center', color: '#434343' }}>0 kph</Text>
+					<Text style={{ textAlign: 'center', color: '#434343' }}>0 m/s</Text>
 				)}
 			</Card>
 		</View>
