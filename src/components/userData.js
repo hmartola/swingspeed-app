@@ -9,38 +9,43 @@ const UserData = ({ username }) => {
 
 	const [selectedGenderButtonIndex, setSelectedGenderButtonIndex] = useState(0)
 	const [selectedHandednessButtonIndex, setSelectedHandednessButtonIndex] = useState(1)
-	const [selectedUnitsButtonIndex, setSelectedUnitsButtonIndex] = useState(0)
 	const [isLefty, setIsLefty] = useState(false)
-	const [isMetric, setIsMetric] = useState(true)
-	//const [name, setName] = useState(username)  // TODO: ABLE TO ALSO ASSIGN REAL NAME TO ACCOUNT ?
 	const [age, setAge] = useState('Type your age')
 	const [height, setHeight] = useState('Type your height')
-	const [hcp, setHcp] = useState('Type your HCP')
+	const [hcp, setHcp] = useState(0)
 	const [topSpeed, setTopSpeed] = useState('No recorded data')
 
 	useEffect(() => {
 		(async () => {
-			const userData = await getUserData()
-			if (userData !== null) {
-				console.log('local data', userData)
-				setData(userData)
-			} 
-			else {
-				const userObj = await userService.getUserData()
+			const userObj = await userService.getUserData()
+			if (userObj !== null) {
 				console.log('api data', userObj)
-				if (userObj !== null) {
-					setData(userObj)
+				setData(userObj)
+			}
+			else {
+				const userData = await getUserData()
+				if (userData !== null) {
+					console.log('local data', userData)
+					setData(userData)
 				}
 			}
 		})()
 	}, [])
+
+	useEffect(() => {
+		(async () => {
+			await storeUserData(data)
+			const res = await userService.storeUserData(data)
+			console.log('submit', data)
+			console.log('api-submit', res.status)
+		})()
+	}, [isLefty, selectedGenderButtonIndex])	
 
 	const data = {
 		age: age,
 		gender: selectedGenderButtonIndex,
 		height: height,
 		lefty: isLefty,
-		units: isMetric,
 		handicap: hcp
 	}
 
@@ -56,7 +61,8 @@ const UserData = ({ username }) => {
 			setHcp(userObj.handicap)
 		}
 		if (userObj.lefty) {
-			handleHandedness(0)
+			setSelectedHandednessButtonIndex(0)
+			setIsLefty(true)
 		}
 		if (userObj.top_speed !== null) {
 			setTopSpeed(userObj.top_speed)
@@ -66,15 +72,12 @@ const UserData = ({ username }) => {
 		}
 	}
 
-	const handleSubmit = async () => {
+ 	const handleSubmit = async () => {
 		await storeUserData(data)
+		const res = await userService.storeUserData(data)
 		console.log('submit', data)
-	}
-
-/* 	const handleGender = (index) => {
-		setSelectedGenderButtonIndex(index)
-		handleSubmit()
-	} */
+		console.log('api-submit', res.status)
+	} 
 
 	const handleHandedness = (index) => {
 		setSelectedHandednessButtonIndex(index)
@@ -83,17 +86,6 @@ const UserData = ({ username }) => {
 		} else {
 			setIsLefty(false)
 		}
-		handleSubmit()
-	}
-
-	const handleUnits = (index) => {
-		setSelectedUnitsButtonIndex(index)
-		if (index === 0) {
-			setIsMetric(true)
-		} else {
-			setIsMetric(false)
-		}
-		handleSubmit()
 	}
 
 	return (
@@ -113,7 +105,7 @@ const UserData = ({ username }) => {
 					keyboardType='number-pad'
 					onChangeText={age => setAge(age)}
 					onFocus={() => setAge('')}
-					onBlur={() => handleSubmit()} 
+					onBlur={() => handleSubmit()}
 					containerStyle={{ textAlign: 'right', paddingHorizontal: 0 }}/>
 			</ListItem>
 			<ListItem bottomDivider>
@@ -123,7 +115,7 @@ const UserData = ({ username }) => {
 				<ListItem.ButtonGroup
 					buttons={['Male', 'Female', 'Other']}
 					selectedIndex={selectedGenderButtonIndex}
-					onPress={(index) => { setSelectedGenderButtonIndex(index), handleSubmit() }}
+					onPress={(index) => { setSelectedGenderButtonIndex(index)}}
 					selectedButtonStyle={{ backgroundColor: '#008811' }}
 				/>
 			</ListItem>
@@ -152,17 +144,6 @@ const UserData = ({ username }) => {
 			</ListItem>
 			<ListItem bottomDivider>
 				<ListItem.Content>
-					<ListItem.Title>Units</ListItem.Title>
-				</ListItem.Content>
-				<ListItem.ButtonGroup
-					buttons={['Metric', 'Imperial']}
-					selectedIndex={selectedUnitsButtonIndex}
-					onPress={(index) => handleUnits(index)}
-					selectedButtonStyle={{ backgroundColor: '#008811' }}
-				/>
-			</ListItem>
-			<ListItem bottomDivider>
-				<ListItem.Content>
 					<ListItem.Title>HCP</ListItem.Title>
 				</ListItem.Content>
 				<ListItem.Input
@@ -170,14 +151,14 @@ const UserData = ({ username }) => {
 					keyboardType='number-pad'
 					onChangeText={hcp => setHcp(hcp)}
 					onFocus={() => setHcp('')}
-					onBlur={() => handleSubmit()} 
+					onBlur={() => handleSubmit()}
 					containerStyle={{ textAlign: 'right', paddingHorizontal: 0 }}/>
 			</ListItem>
 			<ListItem bottomDivider>
 				<ListItem.Content>
 					<ListItem.Title>Top swing speed</ListItem.Title>
 				</ListItem.Content>
-				<ListItem.Title>{topSpeed}</ListItem.Title>
+				<ListItem.Title>{topSpeed} kph</ListItem.Title>
 			</ListItem>
 		</View>
 
