@@ -9,9 +9,10 @@ export const progressNotification = async (event, progress) => {
   if (event === 'start') {
     await notifee.displayNotification({
       id: '1',
-      title: 'Uploading and analyzing swing...',
+      title: 'Analyzing swing...',
       android: {
         channelId,
+        onlyAlertOnce: true,
         progress: {
           max: 100,
           current: progress
@@ -23,9 +24,10 @@ export const progressNotification = async (event, progress) => {
   if (event === 'update' && progress !== 100) {
     await notifee.displayNotification({
       id: '1',
-      title: 'Uploading and analyzing swing...',
+      title: `Analyzing swing... ${Math.round(progress)}%`,
       android: {
         channelId,
+        onlyAlertOnce: true,
         progress: {
           max: 100,
           current: progress
@@ -38,7 +40,7 @@ export const progressNotification = async (event, progress) => {
     await notifee.displayNotification({
       id: '1',
       title: 'Finished',
-      body: progress.message,
+      body: `${progress.message} kph`,
       android: {
         channelId
       }
