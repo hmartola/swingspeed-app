@@ -5,6 +5,7 @@ import { getAuthToken } from "../components/user"
 
 const userUrl = `${BASE_URL}/api/users`
 const tokenUrl = `${BASE_URL}/api/token`
+const swingUrl = `${BASE_URL}/api/swings`
 
 const authorization = async () => {
 	let token = await getAuthToken()
@@ -43,6 +44,20 @@ const logoutUser = async () => {
 	}
 }
 
+const storeUserData = async (userData) => {
+	const token = await authorization()
+	const config = {
+		headers: { Authorization: token }
+	}
+	try {
+		const response = await axios.patch(`${userUrl}/me/`, userData, config)
+		return response
+	} catch (err) {
+		console.warn(err)
+		return err.response.data
+	}
+}
+
 const getUserData = async () => {
 	const token = await authorization()
 	const config = {
@@ -53,6 +68,19 @@ const getUserData = async () => {
 		return response.data
 	} catch (err) {
 		throw err
+	}
+}
+
+const getUserSwings = async () => {
+	const token = await authorization()
+	const config = {
+		headers: { Authorization: token }
+	}
+	try {
+		const response = await axios.get(`${swingUrl}/`, config)
+		return response.data
+	} catch (err) {
+		return err.response.data
 	}
 }
 
@@ -96,4 +124,4 @@ const getProfilePicture = async () => {
 }
 
 
-export default { getToken, createUser, logoutUser, getUserData, uploadProfilePicture, getProfilePicture }
+export default { getToken, createUser, logoutUser, storeUserData, getUserData, getUserSwings, uploadProfilePicture, getProfilePicture }
