@@ -44,6 +44,18 @@ const MainScreen = ({ navigation }) => {
 		}
 	}
 
+	const getAverageSwing = () => {
+		try {
+			const swings = swingData.map(swings => {
+				return swings.speed
+			})
+			const avgSwing = swings.reduce((prev, curr) => prev + curr, 0) / swings.length
+			return Math.round(avgSwing)
+		} catch (err) {
+			console.warn(err)
+		}
+	}
+
 	return (
 		<View 
 			style={{ 
@@ -95,6 +107,18 @@ const MainScreen = ({ navigation }) => {
 				<Card.Divider />
 				{swingData.length !== 0 ? (
 					<Text style={{ textAlign: 'center', color: '#434343' }}>{getTopSwing()} m/s</Text>
+				) : (
+					<Text style={{ textAlign: 'center', color: '#434343' }}>0 m/s</Text>
+				)}
+			</Card>
+		</View>
+
+		<View style={{ marginTop: 5 }}>
+			<Card>
+				<Card.Title style={{ fontSize: 20 }}>Your average swing speed</Card.Title>
+				<Card.Divider />
+				{swingData.length !== 0 ? (
+					<Text style={{ textAlign: 'center', color: '#434343' }}>{getAverageSwing()} m/s</Text>
 				) : (
 					<Text style={{ textAlign: 'center', color: '#434343' }}>0 m/s</Text>
 				)}
