@@ -33,7 +33,7 @@ const uploadVideo = async (filePath, fileName) => {
 		const data = new FormData()
 		data.append('video', videoObj)
 
-		const response = await axios.post(`${swingUrl}/upload/`, data, config)
+		const response = await axios.post(`${swingUrl}/`, data, config)
 		const taskId = response.data.task_id
 		const progress = await axios.get(`${swingUrl}/progress/${taskId}`, config)
 		console.log(`${swingUrl}/progress/${taskId}`)
