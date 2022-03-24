@@ -18,7 +18,6 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import MainMenu from './navigation/mainMenu';
 import LoginScreen from './screens/login';
 import CreateAccountScreen from './screens/createAccount';
-import SettingsScreen from './screens/settings';
 import { LoginContext } from './contexts/loginContext';
 
 const App = () => {
@@ -45,7 +44,6 @@ const App = () => {
 					{isLoggedIn ? (
 						<Stack.Navigator screenOptions={{ headerShown: false }}>
 							<Stack.Screen name='Main Menu' component={MainMenu} />
-							<Stack.Screen name='Settings' component={SettingsScreen} />
 						</Stack.Navigator>
 					) : (
 						<Stack.Navigator screenOptions={{ headerShown: false }}>
