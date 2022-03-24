@@ -9,6 +9,7 @@ import RNFS from 'react-native-fs'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import videoService from '../service/video'
+import { successMessage } from "../components/message"
 
 
 const CameraScreen = () => {
@@ -80,11 +81,7 @@ const CameraScreen = () => {
 		else {
 			await camera.current.stopRecording()
 			setIsRecording(false)
-			setVisible(true)
-			setNotification('Recording stopped, uploading now...')
-			setTimeout(() => {
-				setVisible(false)
-			}, 3000);
+			successMessage('Your recording is being uploaded. A notification should pop up with the analysis process shortly.')
 		}
 	}
 
